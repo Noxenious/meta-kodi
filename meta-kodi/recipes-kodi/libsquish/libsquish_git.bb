@@ -5,8 +5,11 @@ LIC_FILES_CHKSUM = "file://README;md5=2a51a796ca47e91336a4d198147ba58f"
 PR = "r0"
 inherit autotools pkgconfig
 
-SRC_URI = "git://github.com/alfonsotames/libsquish.git"
-SRCREV = "a9b44adc6c9d7ae74e23392a83995ba59b436950"
+SRC_URI = "git://github.com/OpenELEC/libsquish.git \
+            file://0001-remove-installdir-from-config.patch \
+            "
+
+SRCREV = "52e7d93c5947f72380521116c05d97c528863ba8"
 
 
 S = "${WORKDIR}/git"

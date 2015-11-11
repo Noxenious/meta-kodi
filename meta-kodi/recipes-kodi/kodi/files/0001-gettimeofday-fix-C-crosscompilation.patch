@@ -1,0 +1,52 @@
+From 32d4678804ef336086bd967db9de6871812033c0 Mon Sep 17 00:00:00 2001
+From: Alexandre Duret-Lutz <adl@lrde.epita.fr>
+Date: Thu, 18 Jul 2013 20:07:37 +0200
+Subject: [PATCH] gettimeofday: fix C++ crosscompilation
+
+Never replace gmtime and localtime by macros when compiling with
+C++, this prevents <ctime> from being included.
+
+Most of this patch was posted by John W. Eaton on 2011-11-30:
+<http://lists.gnu.org/archive/html/bug-gnulib/2011-11/msg00388.html>
+I only fixed the prototypes in time.in.h, added a couple of
+AC_SUBSTs, and ensured it worked for me.
+
+* m4/gettimeofday.m4 (gl_GETTIMEOFDAY_REPLACE_LOCALTIME): Do not
+define gmtime and localtime as preprocessor macros.  Instead
+define some HAVE_GMTIME, HAVE_LOCALTIME, REPLACE_GMTIME, and
+REPLACE_LOCALTIME substitutions.
+* libtime.in.h: Declare gmtime and localtime when needed.
+* m4/time_h.m4 (gl_HEADER_TIME_H_DEFAULTS): AC_SUBST HAVE_GMTIME,
+HAVE_LOCALTIME, REPLACE_GMTIME, and REPLACE_LOCALTIME.
+* modules/time: Depend on gettimeofday, and substitute the above
+variables in time.h.
+---
+ xbmc/screensavers/rsxs-0.9/m4/gettimeofday.m4 | 13 +++++++++----
+
+
+
+
+diff --git a/xbmc/screensavers/rsxs-0.9/m4/gettimeofday.m4 b/xbmc/screensavers/rsxs-0.9/m4/gettimeofday.m4
+index 3c05e59..e4682bd 100644
+--- a/xbmc/screensavers/rsxs-0.9/m4/gettimeofday.m4
++++ b/xbmc/screensavers/rsxs-0.9/m4/gettimeofday.m4
+@@ -68,10 +68,15 @@ main ()
+ 
+ AC_DEFUN([gl_GETTIMEOFDAY_REPLACE_LOCALTIME], [
+   AC_LIBOBJ(gettimeofday)
+-  AC_DEFINE(gmtime, rpl_gmtime,
+-    [Define to rpl_gmtime if the replacement function should be used.])
+-  AC_DEFINE(localtime, rpl_localtime,
+-    [Define to rpl_localtime if the replacement function should be used.])
++  AC_CHECK_FUNCS_ONCE([gmtime localtime])
++  if test $ac_cv_func_gmtime != yes; then
++    HAVE_GMTIME=0
++  fi
++  if test $ac_cv_func_localtime != yes; then
++    HAVE_LOCALTIME=0
++  fi
++  REPLACE_GMTIME=1
++  REPLACE_LOCALTIME=1
+ ])
+ 
+ # Prerequisites of lib/gettimeofday.c.

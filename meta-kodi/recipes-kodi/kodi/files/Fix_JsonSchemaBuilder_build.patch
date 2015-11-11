@@ -1,0 +1,13 @@
+diff --git a/tools/depends/native/JsonSchemaBuilder/Makefile b/tools/depends/native/JsonSchemaBuilder/Makefile
+index cf5d20b..6a1a008 100644
+--- a/tools/depends/native/JsonSchemaBuilder/Makefile
++++ b/tools/depends/native/JsonSchemaBuilder/Makefile
+@@ -12,7 +12,7 @@ ifeq ($(NATIVEPLATFORM),)
+ else
+   PLATFORM = $(NATIVEPLATFORM)
+ endif
+-
++CXX=${BUILD_CXX}
+ SOURCE=$(ROOT_DIR)/src
+ 
+ CONFIGURE=./configure --prefix=$(PREFIX)

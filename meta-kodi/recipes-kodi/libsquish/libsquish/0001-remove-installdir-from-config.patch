@@ -1,0 +1,20 @@
+From a9b44adc6c9d7ae74e23392a83995ba59b436950 Mon Sep 17 00:00:00 2001
+From: =?UTF-8?q?Alfonso=20Tam=C3=A9s?= <alfonso@tames.com>
+Date: Tue, 6 Oct 2015 01:21:15 -0500
+Subject: [PATCH] Removed INSTALL_DIR from config because it conflicts with
+ bitbake
+
+---
+ config | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/config b/config
+index fdca022..e2a6787 100644
+--- a/config
++++ b/config
+@@ -17,5 +17,3 @@ CPPFLAGS += -DSQUISH_USE_SSE=2
+ CXXFLAGS += -msse
+ endif
+ 
+-# where should we install to
+-INSTALL_DIR ?= @PREFIX@
