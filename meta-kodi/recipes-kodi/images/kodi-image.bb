@@ -4,11 +4,6 @@ include recipes-graphics/images/core-image-x11.bb
 #include recipes-sato/images/core-image-sato.bb
 #include recipes-core/images/build-appliance-image_8.0.bb
 
-#Based on meta-stef by Wolfgar
-
-LICENSE = "MIT"
-
-
 IMAGE_FEATURES += "debug-tweaks"
 
 # Add extra image features
@@ -22,7 +17,6 @@ EXTRA_IMAGE_FEATURES += " \
 IMAGE_INSTALL += " \
     mesa \
     piglit \
-    libegl-gallium \
     mesa-demos \
     mpeg2dec \
     openssh-sftp-server \
@@ -31,8 +25,6 @@ IMAGE_INSTALL += " \
     util-linux-mount \
     util-linux \
     packagegroup-core-sdk \
-    joe \
-    nano \
     rsync \
     ethtool \
     samba \
@@ -43,7 +35,6 @@ IMAGE_INSTALL += " \
     glibc-gconv-utf-32 \
     alsa-tools \
     alsa-state \
-    alsa-utils-alsaconf \
     pulseaudio \
     transmission \
 "
@@ -60,5 +51,3 @@ IMAGE_INSTALL += " \
 ENABLE_BINARY_LOCALE_GENERATION = "1"
 
 export IMAGE_BASENAME = "kodi-image"
-
-#     TODO:     tvheadend
