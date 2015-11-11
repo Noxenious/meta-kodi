@@ -2,51 +2,56 @@ meta-kodi
 ==============
 
 Universal Kodi Media Layer
+
 based upon the works of:
+
 https://github.com/alfonsotames/meta-kodi
+
 https://github.com/ronan22/meta-kodi
 
-**_Test Layer with Yocto_**
+## Test Layer with Yocto
 
-## Create working directory
+**_Create working directory_**
 
     mkdir ~/yocto
     cd ~/yocto
 
-## Get poky (Latest release jethro)
+**_Get poky (Latest release jethro)_**
 
     git clone -b jethro git://git.yoctoproject.org/poky.git
  
-## Get meta-oe
+**_Get meta-oe_**
 
     git clone -b jethro git://git.openembedded.org/meta-openembedded
 
-## Get meta-kodi:
+**_Get meta-kodi:_**
 
-    git clone https://github.com/Noxenious/meta-kodi.git
+    git clone https://github.com/jlucius/meta-kodi.git
 
-## init your project:
+**_init your project:_**
     cd poky
-    oe-init-build-env
+    source oe-init-build-env
 
-## add your meta:
+**_add your meta:_**
     vi conf/bblayers.conf 
 
 * Add meta-kodi path to BBLAYERS variable (e.g. /home/user/yocto/meta-kodi/meta-kodi)
 * Add meta-oe path to BBLAYERS variable (e.g. /home/user/yocto/meta-openembedded/meta-oe)
  
-## add LICENSE_FLAGS_WHITELIST
+**_add LICENSE_FLAGS_WHITELIST_**
 
     vi conf/local.conf
 
 * Add LICENSE_FLAGS_WHITELIST += "commercial"
 
-## Build your image:
+**_Build your image:_**
 
     bitbake kodi-image 
 
-## Test your image:
+**_Test your image:_**
+
 On a terminal
+
     runqemu qemux86 kodi-image
 
 On a web navigator such as firefox, go to
@@ -57,7 +62,7 @@ On a web navigator such as firefox, go to
 You should see a HTML Menu with file manager & Transmission (Torrent Client)
 
 
-**_Machine specific layers_**
+## Machine specific layers
 
 For different CPUs additional layers are required (e.g. meta-intel, meta-fsl-arm, meta-sunxi)
 
