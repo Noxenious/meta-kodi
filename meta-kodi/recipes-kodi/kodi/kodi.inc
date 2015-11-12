@@ -40,40 +40,42 @@ KODI_DEPENDENCY = " \
 DEPENDS = " \
 	${KODI_DEPENDENCY} \
 	alsa-lib \
-	python \
-	mpeg2dec \
 	boost \
-	cmake \
-	zlib \
-	dbus \
-	libass \
-	mariadb \
-	swig \
-	libmodplug \
-	yajl \
-	libtinyxml \
-	libcdio \
-	jasper \
-	libssh \
-	samba \
-	taglib \
-	tiff \
-	libmicrohttpd \
-	libssh \
-	rtmpdump \
-	swig-native \
-	libxslt \
-	libplist \
-	flac \
-	libvorbis \
-	udev \
-	curl \
-	lzo \
 	cairo \
-	pango \
+	cmake \
+	curl \
+	dbus \
+	doxygen-native \
+	ffmpeg-kodi \
+	flac \
 	fontconfig \
 	freetype \
-	ffmpeg-kodi \
+	jasper \
+	libass \
+	libcdio \
+	libmicrohttpd \
+	libmodplug \
+	libplist \
+	libssh \
+	libsquish \
+	libtinyxml \
+	libtinyxml-native \
+	libvorbis \
+	libxslt \
+	lzo \
+	mariadb \
+	mpeg2dec \
+	pango \
+	python \
+	rtmpdump \
+	samba \
+	swig \
+	swig-native \
+	taglib \
+	tiff \
+	udev \
+	yajl \
+	zlib \
 "
 
 DEPENDS_append = " virtual/kernel "
@@ -81,7 +83,6 @@ DEPENDS_append = " virtual/kernel "
 DEPENDS_append_mx6 = " libfslvpuwrap \
                        libcec-imx \
                      "
-# todo: libbluray 
 
 RDEPENDS_${PN} = "lsb \
                   ${PN}-bin \
@@ -90,7 +91,7 @@ RDEPENDS_${PN} = "lsb \
 
 S = "${WORKDIR}/git/"
 
-inherit autotools lib_package pkgconfig gettext python-dir
+inherit autotools-brokensep lib_package pkgconfig gettext python-dir
 
 PACKAGECONFIG_GL ?= "${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'opengl', '', d)}"
 #PACKAGECONFIG_GL ?= "${@bb.utils.contains('DISTRO_FEATURES', 'opengl', 'gles2', '', d)}"
@@ -102,18 +103,18 @@ PACKAGECONFIG ?= " \
                   avahi \
                   airplay \
                  "
-                 
-PACKAGECONFIG[x11]    = "--enable-x11 --enable-xrandr,--disable-x11 --disable-xrandr,virtual/libx11"
+
+PACKAGECONFIG[x11]    = "--enable-x11,--disable-x11,virtual/libx11"
 PACKAGECONFIG[opengl] = "--enable-gl,--disable-gl,virtual/libgl libglu glew"
 PACKAGECONFIG[gles2]  = "--enable-gles ,--disable-gles , virtual/libgles2 virtual/egl "
 PACKAGECONFIG[openmax]  = "--enable-openmax,--disable-openmax, libomxil"
 PACKAGECONFIG[udev]   = "--enable-udev,--disable-udev,udev"
 PACKAGECONFIG[libva]  = "--enable-vaapi,--disable-vaapi,libva libav"
-PACKAGECONFIG[sdl]    = "--enable-sdl --enable-joystick,--disable-sdl --disable-joystick, libsdl"
+PACKAGECONFIG[sdl]    = "--enable-joystick,--disable-joystick,libsdl"
 PACKAGECONFIG[avahi]  = "--enable-avahi,--disable-avahi,avahi"
-PACKAGECONFIG[libcec] = "--enable-libcec,--disable-libcec, libcec"
+PACKAGECONFIG[libcec] = "--enable-libcec,--disable-libcec,libcec"
 PACKAGECONFIG[airplay]    = "--enable-airplay --enable-airtunes,--disable-airplay --disable-airtunes, shairplay"
-PACKAGECONFIG[pulseaudio] = "--enable-pulse,--disable-pulse, pulseaudio"
+PACKAGECONFIG[pulseaudio] = "--enable-pulse,--disable-pulse,pulseaudio"
 
 EXTRA_OECONF=" --disable-debug \
 	--build=${BUILD_SYS} \
@@ -128,7 +129,7 @@ EXTRA_OECONF=" --disable-debug \
 	--enable-rsxs \
 	LIBS=' -llzma ' \
            "
-	
+
 EXTRA_OECONF_append = "${@bb.utils.contains('MACHINE', 'mx6', ' --prefix=/imx6/xbmc', ' --prefix=/usr', d)}"
 
 CXXFLAGS += " -I${STAGING_KERNEL_DIR}/include/uapi -I${STAGING_KERNEL_DIR}/include "
@@ -137,10 +138,6 @@ CFLAGS += " -I${STAGING_KERNEL_DIR}/include/uapi -I${STAGING_KERNEL_DIR}/include
 FILES_${PN} += "${datadir}/icons/hicolor"
 FILES_${PN}_mx6 += " /imx6"
 
-
-EXTRA_OEMAKE = "'BUILDDIR=${S}/build'"
-
-
 do_configure() {
    export PYTHON_EXTRA_LDFLAGS=""
    export PYTHON_EXTRA_LIBS="-lz"
@@ -148,6 +145,10 @@ do_configure() {
    export PYTHON_NOVERSIONCHECK="no-check"
    export PYTHON_CPPFLAGS="-I/${STAGING_INCDIR}/${PYTHON_DIR}"
    export PYTHON_LDFLAGS="-L${STAGING_LIBDIR} -lpython${PYTHON_BASEVERSION}"
+   export TINYXML_CFLAGS="-I/${STAGING_INCDIR}"
+   export TINYXML_LIBS="-L${STAGING_LIBDIR} -ltinyxml"
+   export SQUISH_CFLAGS="-I/${STAGING_INCDIR}"
+   export SQUISH_LIBS="-L${STAGING_LIBDIR} -lsquish"
    cd ${S}
    sh bootstrap
    sh configure ${EXTRA_OECONF}
@@ -156,14 +157,6 @@ do_configure() {
 do_compile() {
    cd ${S}
    oe_runmake BUILDDIR=${BUILDDIR} DESTDIR=${D}
-}
-
-do_install() {
-   cd ${S}
-   oe_runmake BUILDDIR=${BUILDDIR} DESTDIR=${D} install
-   rm -fr   ${D}${prefix}/lib/xbmc
-   rm -fr   ${D}${datadir}/xbmc
-   rm -f   ${D}${datadir}/xsessions/xbmc.desktop
 }
 
 INHIBIT_PACKAGE_DEBUG_SPLIT = "1"
