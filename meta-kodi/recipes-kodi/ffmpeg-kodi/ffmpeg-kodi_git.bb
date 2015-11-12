@@ -4,11 +4,13 @@ LICENSE = "GPLv2"
 LIC_FILES_CHKSUM = "file://LICENSE.md;md5=4e0e4c9534db149e6b733ea75e421da7"
 PR = "r0"
 
-DEPENDS = " zlib alsa-lib "
+DEPENDS = " zlib alsa-lib nasm-native "
 
-inherit autotools pkgconfig
+inherit autotools-brokensep pkgconfig
 
-SRC_URI = "https://github.com/xbmc/FFmpeg/archive/2.6.4-Isengard.tar.gz"
+SRC_URI = "https://github.com/xbmc/FFmpeg/archive/2.6.4-Isengard.tar.gz \
+            file://memset_workaround_gcc5.patch \
+            "
 
 SRC_URI[md5sum] = "3dbd015fbfea2cbedf1fbd0779ab987e"
 SRC_URI[sha256sum] = "2487a6d4ad5701ad22582fc064ce39b60c383eec4958ca1e3218379035fa523f"
@@ -32,10 +34,12 @@ EXTRA_OECONF = " \
 "
 
 EXTRA_OECONF_append_mx6 = " --extra-cflags=' -march=armv7-a -mfloat-abi=hard -mfpu=neon -mtune=cortex-a9'"
-
+TARGET_CFLAGS_x86 := "${TARGET_CFLAGS} -fomit-frame-pointer"
 FULL_OPTIMIZATION_armv7a = "-fexpensive-optimizations  -ftree-vectorize -fomit-frame-pointer -O4 -ffast-math"
 BUILD_OPTIMIZATION = "${FULL_OPTIMIZATION}"
 
+#        --enable-libmp3lame gives linking errors with kodi!
+ 
 #        --enable-libmp3lame gives linking errors with kodi!
 
 do_configure() {
@@ -43,15 +47,5 @@ do_configure() {
         ./configure ${EXTRA_OECONF}
 }
 
-do_compile() {
-   cd ${S}
-   make -j 8 BUILDDIR=${BUILDDIR} DESTDIR=${D}
-}
-
-do_install() {
-   cd ${S}
-   make -j 8 BUILDDIR=${BUILDDIR} DESTDIR=${D} install
-}
 
 FILES_${PN} += "/"
-
