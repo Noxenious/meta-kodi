@@ -3,12 +3,6 @@ meta-kodi
 
 Universal Kodi Media Layer
 
-based upon the works of:
-
-https://github.com/alfonsotames/meta-kodi
-
-https://github.com/ronan22/meta-kodi
-
 ## Test Layer with Yocto
 
 **_Create working directory_**
@@ -67,3 +61,11 @@ You should see a HTML Menu with file manager & Transmission (Torrent Client)
 For different CPUs additional layers are required (e.g. meta-intel, meta-fsl-arm, meta-sunxi)
 
 Work in progress. Comments / help welcome.
+
+## Credits
+
+Based upon the works of:
+
+https://github.com/alfonsotames/meta-kodi
+
+https://github.com/ronan22/meta-kodi
