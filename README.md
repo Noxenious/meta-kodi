@@ -22,17 +22,19 @@ Universal Kodi Media Layer
 
     git clone https://github.com/jlucius/meta-kodi.git
 
-**_init your project:_**
+**_Init your project:_**
+
     cd poky
     source oe-init-build-env
 
-**_add your meta:_**
+**_Add your meta:_**
+
     vi conf/bblayers.conf 
 
 * Add meta-kodi path to BBLAYERS variable (e.g. /home/user/yocto/meta-kodi/meta-kodi)
 * Add meta-oe path to BBLAYERS variable (e.g. /home/user/yocto/meta-openembedded/meta-oe)
  
-**_add LICENSE_FLAGS_WHITELIST_**
+**_Add LICENSE_FLAGS_WHITELIST_**
 
     vi conf/local.conf
 
@@ -52,7 +54,7 @@ On a web navigator such as firefox, go to
 
     http://192.168.7.2
 
-192.168.7.2 should be the address given to qemu machine by default
+192.168.7.2 should be the address given to qemu machine by default.
 You should see a HTML Menu with file manager & Transmission (Torrent Client)
 
 
