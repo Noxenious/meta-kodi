@@ -3,7 +3,7 @@ LICENSE = "GPLv2+"
 LIC_FILES_CHKSUM = "file://README;md5=2a51a796ca47e91336a4d198147ba58f"
 
 PR = "r0"
-inherit autotools pkgconfig
+inherit autotools-brokensep pkgconfig
 
 SRC_URI = "git://github.com/OpenELEC/libsquish.git \
             file://0001-remove-installdir-from-config.patch \
@@ -11,17 +11,16 @@ SRC_URI = "git://github.com/OpenELEC/libsquish.git \
 
 SRCREV = "52e7d93c5947f72380521116c05d97c528863ba8"
 
-
 S = "${WORKDIR}/git"
 
 do_install() {
-   cd ${S}
-   mkdir ${D}/lib
-   mkdir ${D}/lib/pkgconfig
-   mkdir ${D}/include
-   export INSTALL_DIR=${D}
-   make install
+  install -d ${D}/lib
+  install -d ${D}/lib/pkgconfig
+  install -d ${D}/include
+  install -m 400 ${S}/squish.h ${D}/include/squish.h
+  install -m 400 ${S}/squish.pc ${D}/lib/pkgconfig/squish.pc
 }
 
-
+FILES_${PN} += "/include/squish.h"
+FILES_${PN} += "/lib/pkgconfig/squish.pc"
 
