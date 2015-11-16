@@ -14,13 +14,15 @@ SRCREV = "52e7d93c5947f72380521116c05d97c528863ba8"
 S = "${WORKDIR}/git"
 
 do_install() {
-  install -d ${D}/lib
-  install -d ${D}/lib/pkgconfig
   install -d ${D}/usr
   install -d ${D}/usr/include
+  install -d ${D}/usr/lib
+  install -d ${D}/usr/lib/pkgconfig  
   install -m 400 ${S}/squish.h ${D}/usr/include/squish.h
-  install -m 400 ${S}/squish.pc ${D}/lib/pkgconfig/squish.pc
+  install -m 400 ${S}/squish.pc ${D}/usr/lib/pkgconfig/squish.pc
+  install -m 400 ${S}/libsquish.a ${D}/usr/lib/libsquish.a  
 }
 
 FILES_${PN} += "/usr/include/squish.h"
-FILES_${PN} += "/lib/pkgconfig/squish.pc"
+FILES_${PN} += "/usr/lib/pkgconfig/squish.pc"
+FILES_${PN} += "/usr/lib/libsquish.a"
