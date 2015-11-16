@@ -16,11 +16,11 @@ S = "${WORKDIR}/git"
 do_install() {
   install -d ${D}/lib
   install -d ${D}/lib/pkgconfig
-  install -d ${D}/include
-  install -m 400 ${S}/squish.h ${D}/include/squish.h
+  install -d ${D}/usr
+  install -d ${D}/usr/include
+  install -m 400 ${S}/squish.h ${D}/usr/include/squish.h
   install -m 400 ${S}/squish.pc ${D}/lib/pkgconfig/squish.pc
 }
 
-FILES_${PN} += "/include/squish.h"
+FILES_${PN} += "/usr/include/squish.h"
 FILES_${PN} += "/lib/pkgconfig/squish.pc"
-
