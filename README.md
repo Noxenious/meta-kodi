@@ -5,21 +5,19 @@ Universal Kodi Media Layer
 
 ## Test Layer with Yocto
 
+**_Needed packages (Ubuntu)_**
+
+    sudo apt-get install gawk wget git-core diffstat unzip zip texinfo gcc-multilib build-essential chrpath socat libsdl1.2-dev xterm openjdk-7-jdk
+
 **_Create working directory_**
 
     mkdir ~/yocto
     cd ~/yocto
 
-**_Get poky (Latest release jethro)_**
+**_Get poky, meta-oe and meta-kodi (Latest release jethro)_**
 
     git clone -b jethro git://git.yoctoproject.org/poky.git
- 
-**_Get meta-oe_**
-
     git clone -b jethro git://git.openembedded.org/meta-openembedded
-
-**_Get meta-kodi:_**
-
     git clone https://github.com/jlucius/meta-kodi.git
 
 **_Init your project:_**
@@ -27,17 +25,15 @@ Universal Kodi Media Layer
     cd poky
     source oe-init-build-env
 
-**_Add your meta:_**
+**_Edit configuration:_**
 
     vi conf/bblayers.conf 
 
 * Add meta-kodi path to BBLAYERS variable (e.g. /home/user/yocto/meta-kodi/meta-kodi)
 * Add meta-oe path to BBLAYERS variable (e.g. /home/user/yocto/meta-openembedded/meta-oe)
- 
-**_Add LICENSE_FLAGS_WHITELIST_**
 
     vi conf/local.conf
-
+ 
 * Add LICENSE_FLAGS_WHITELIST += "commercial"
 
 **_Build your image:_**
