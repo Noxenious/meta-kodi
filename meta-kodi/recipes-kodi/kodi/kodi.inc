@@ -126,9 +126,14 @@ EXTRA_OECONF=" --disable-debug \
 	--disable-vdpau \
 	--disable-texturepacker \
 	--disable-mid \
-	--enable-rsxs \
+	--disable-optical-drive \
+	--disable-dvdcss \
+	--disable-nfs \
+	--disable-gtest \
+	--disable-rsxs \
 	LIBS=' -llzma ' \
            "
+# to-do: add libnfs from openelec git
 
 EXTRA_OECONF_append = "${@bb.utils.contains('MACHINE', 'mx6', ' --prefix=/imx6/xbmc', ' --prefix=/usr', d)}"
 
