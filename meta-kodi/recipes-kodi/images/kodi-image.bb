@@ -1,10 +1,6 @@
-#include recipes-core/images/core-image-base.bb
-#include recipes-graphics/images/core-image-weston.bb
-include recipes-graphics/images/core-image-x11.bb
-#include recipes-sato/images/core-image-sato.bb
-#include recipes-core/images/build-appliance-image_8.0.bb
+include recipes-core/images/core-image-minimal.bb
 
-IMAGE_FEATURES += "debug-tweaks"
+IMAGE_FEATURES += "debug-tweaks splash x11-base"
 
 # Add extra image features
 EXTRA_IMAGE_FEATURES += " \
@@ -15,38 +11,29 @@ EXTRA_IMAGE_FEATURES += " \
 "
 
 IMAGE_INSTALL += " \
-    mesa \
-    piglit \
-    mesa-demos \
-    mpeg2dec \
-    openssh-sftp-server \
-    kodi \
-    procps \
-    util-linux-mount \
-    util-linux \
-    packagegroup-core-sdk \
-    rsync \
-    ethtool \
-    samba \
+    alsa-tools \
+    alsa-state \
     curl \
+    ethtool \
     gettext \
     glibc-gconv-ibm850 \
     glibc-gconv-cp1252 \
     glibc-gconv-utf-32 \
-    alsa-tools \
-    alsa-state \
+    kodi \
+    mesa \
+    mesa-demos \
+    mpeg2dec \
+    piglit \
+    openssh-sftp-server \
+    packagegroup-core-sdk \
+    procps \
     pulseaudio \
+    rsync \ 
+    samba \
     transmission \
+    util-linux-mount \
+    util-linux \
 "
-
-#IMAGE_INSTALL += " \
-#    qemu \
-#    libvirt \
-#    libvirt-libvirtd \
-#    libvirt-virsh \
-#    kernel-module-kvm \
-#    kernel-module-kvm-intel \
-#    "
 
 ENABLE_BINARY_LOCALE_GENERATION = "1"
 
